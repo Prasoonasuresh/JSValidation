@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>JS Validation</title>
+    </head>
+    
+    <body>
+        
+        <div id="error" style="color:red; font-size:18px; font-weight:bold; text-align:center"></div> <!-- Message that appears when nothing is selected-->
+            <form id="form"> 
+        
+        
+            <label for="fName" >First Name:</label>           
+            <input type="text" id="fName" placeholder="First Name" required />
+            
+            <br>
+            <br>
+
+            <label for="lName" >Last Name:</label>
+            <input type="text" id="lName" placeholder="Last Name" required />
+            
+            <br>
+            <br>
+
+            <label for="age" >Age:</label> 
+            <input type="text" id="age" placeholder="Age" maxlength = "3" required />
+            
+            <br>
+            <br>
+
+            <label for="gen1">Male</label>  
+            <input type="radio" id="gen1" name="gender" value="male"  required />
+            
+            <label for="gen2">Female</label>
+            <input type="radio" id="gen2" name="gender" value="female"  required />
+            
+            <br>
+            <br>
+            
+            <input type = "submit" value="Submit" /> 
+            
+
+       </form>
+
+       <script>
+
+        form.addEventListener ('submit', (e) => {
+            e.preventDefault(); //prevents the auto submission of the form 
+
+        const form = document.getElementById("form");
+        const fName = document.getElementById("fName").value;  
+        const lName = document.getElementById("lName").value;
+        const age = document.getElementById("age").value;
+        
+        var messages = [];  
+        const errorElement = document.getElementById('error');
+        
+        if (fName == "") {
+        messages.push(" Please enter First Name");
+     
+        }
+
+    // regular expression to match only alphanumeric characters and spaces
+       //const re = /^[\w ]+$/;
+       const re = /^[A-Za-z][A-Za-z0-9_]$/;
+
+    // validation fails if the input doesn't match our regular expression
+       if(!re.test(fName)) {
+         messages.push(" First Name contains invalid characters");
+       }
+      
+       if(!re.test(lName)) {
+         messages.push(" Last Name contains invalid characters");
+        }
+
+     // I have put this validation just because they asked us for length greater than 5 but 5 characters is normal length in name   
+       if(fName.length > 20){
+        messages.push(" First Name is more than 20 characters");
+       }
+
+       if(lName.length > 20){
+        messages.push(" Last Name is more than 20 characters");
+       }
+
+       if (isNaN(age))
+       {
+         messages.push(" Age should be a number");
+       }
+
+            
+       if (messages.length > 0)
+        {
+            e.preventDefault();
+            errorElement.innerText = messages.join(', ');
+        }
+        else
+        {
+        messages.push("***** Congratulations your booking is done and you will soon receive your booking details in your specified email! *****")
+        errorElement.innerText = messages;
+        }
+       
+    })
+
+
+</script>
+</body>
+</html>
